@@ -1,4 +1,4 @@
-/* C program to change your IP address */
+ /* C program to change your IP address */
 
 // lets call some libraries
 #define _GNU_SOURCE
@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <errno.h>
+#include <stdbool.h>
+#include <sys/ioctl.h>
 
 // making the work easier
 typedef unsigned char int8;
@@ -22,6 +24,7 @@ struct s_mac
 };
 typedef struct s_mac Mac;	// struct renamed to 'Mac'
 
+bool chmac(Mac);
 Mac generate_mac(void);
 int main(int, char**);
 
@@ -35,6 +38,13 @@ Mac generate_mac()	// returns a 48 bit number
 	mac.addr = ((a * b) % 281474976710656);
 
 	return mac;
+}
+
+bool chmac(Mac)
+{
+	struct ifreq ir;
+
+	strncpy(ir.ifr_ifrn.ifrn_name, INTERFACE, (IFNAMESIZ - 1));
 }
 
 int main(int argc, char *argv[])

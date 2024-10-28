@@ -1,4 +1,4 @@
- /* C program to change your IP address */
+/* C program to change your IP address */
 
 // lets call some libraries
 #define _GNU_SOURCE
@@ -24,7 +24,7 @@ struct s_mac
 };
 typedef struct s_mac Mac;	// struct renamed to 'Mac'
 
-bool chmac(Mac);
+bool chmac(int8*, Mac);
 Mac generate_mac(void);
 int main(int, char**);
 
@@ -40,11 +40,13 @@ Mac generate_mac()	// returns a 48 bit number
 	return mac;
 }
 
-bool chmac(Mac)
+bool chmac(int8 *if, Mac)
 {
 	struct ifreq ir;
+	int8 *if;
 
 	strncpy(ir.ifr_ifrn.ifrn_name, INTERFACE, (IFNAMESIZ - 1));
+	ir.ifr_ifru.ifru_hwaddr.sa_family = ARPHRD_ETHER;
 }
 
 int main(int argc, char *argv[])
